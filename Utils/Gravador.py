@@ -2,10 +2,9 @@ import pickle
 
 
 class Gravador:
-    def __init__(self, matriz: list):
-        self.matriz = matriz
+    def __init__(self):
         self.caminho_arquivo = "matriz.pkl"
 
-    def gravar(self):
+    def gravar(self, matriz):
         with open(self.caminho_arquivo, "wb") as arquivo:
-            pickle.dump(self.matriz, arquivo)
+            pickle.dump(matriz, arquivo)
