@@ -3,10 +3,11 @@ import pickle
 
 
 class Leitor:
-    def __init__(self):
-        self.caminho_arquivo = "matriz.pkl"
+    def __init__(self, caminho):
+        self.caminho_arquivo = caminho
 
     def ler_matriz(self):
         with open(self.caminho_arquivo, "rb") as arquivo:
             matriz = pickle.load(arquivo)
         return matriz
+
