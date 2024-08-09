@@ -7,4 +7,5 @@ def mostrar_grafo(grafo: nx.Graph):
     labels = nx.get_edge_attributes(grafo, 'peso')
     nx.draw(grafo, pos, with_labels=True, node_size=500, font_size=10)  # Plota o grafo
     nx.draw_networkx_edge_labels(grafo, pos, edge_labels=labels)
-    plt.show()  # Exibe o gráfico
+    plt.savefig("grafo.png")
+#    plt.show()  # Exibe o gráfico

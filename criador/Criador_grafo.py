@@ -15,8 +15,6 @@ class Criador_grafo:
             for coluna in range(0, len(matriz[linha])):
                 if linha < coluna and matriz[linha][coluna] is not None:
                     self.grafo.add_edge(linha, coluna, peso=matriz[linha][coluna])
-
-        self.print_grafo()
         return 0
 
     def print_grafo(self):
