@@ -8,8 +8,8 @@ def gerar_individuo(grafo: nx.Graph):
     fitness = 0
     raiz = int(random.uniform(0, len(grafo.nodes())))
     while True:
-        for i in range(len(grafo.nodes())+1):
-            proximo = random.choice(list(grafo.neighbors(raiz)))
+        for i in range(len(grafo.nodes()) + 1):
+            proximo = random.choice(list(grafo.nodes()))
             if proximo not in caminho:
                 caminho.append(proximo)
                 raiz = proximo
@@ -24,7 +24,7 @@ def gerar_individuo(grafo: nx.Graph):
 def avaliacao_fitness(caminho: list, grafo: nx.Graph):
     fitness = 0
     for cidade in range(1, len(caminho)):
-        fitness += grafo[caminho[cidade]][caminho[cidade - 1]]['peso']
+        fitness += buscar_distancia(grafo, caminho[cidade], caminho[cidade - 1])
     return fitness
 
 
@@ -39,3 +39,11 @@ def gerar_populacao(grafo: nx.Graph, nPopulacao):
 def imprimir_populacao(populacao: list):
     for individuo in populacao:
         print(individuo)
+
+
+def buscar_distancia(grafo: nx.Graph, origem: int, destino: int):
+    try:
+        distancia = nx.dijkstra_path_length(grafo, origem, destino, weight='peso')
+        return distancia
+    except nx.NetworkXNoPath:
+        return float('inf')

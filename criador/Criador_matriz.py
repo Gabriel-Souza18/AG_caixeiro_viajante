@@ -6,6 +6,11 @@ class Criador_matriz:
         self.num_vertices = 0
         self.matriz = []
         self.gravador = gravador
+class Criador_matriz:
+    def __init__(self, gravador: Gravador):
+        self.num_vertices = 0
+        self.matriz = []
+        self.gravador = gravador
 
     def criar_modificar_matriz(self):
         print("Digite a quantidade de vertices: ")
@@ -16,12 +21,13 @@ class Criador_matriz:
                 if i < j:
                     print(f"Digite a distancia direta entre {i} e {j}: (se nao tiver digite 0)")
                     entrada = int(input())
-                    if entrada is not 0:
+                    if entrada != 0:
                         self.matriz[i][j] = entrada
                         self.matriz[j][i] = entrada
                     else:
                         self.matriz[i][j] = None
                         self.matriz[j][i] = None
+
         self.gravador.gravar(self.matriz)
         return 0
 
