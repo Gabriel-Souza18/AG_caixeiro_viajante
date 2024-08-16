@@ -13,6 +13,13 @@ grafo = criador_grafo.get_grafo()
 
 mostrar_grafo(grafo)
 
-gerar_populacao(grafo, 10)
+populacao = Populacao(grafo, 10)
 
-
+num_geracoes = 10
+for geracao in range(0, num_geracoes):
+    if geracao == 0:
+        populacao.geracao_aleatoria()
+    else:
+        print(f"Geracao {geracao}")
+        populacao.geracao_cruzamento()
+        populacao.imprimir_geracao()

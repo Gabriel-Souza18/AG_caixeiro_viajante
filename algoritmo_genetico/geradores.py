@@ -2,8 +2,8 @@ import networkx as nx
 import random
 
 
-def gerar_individuo(grafo: nx.Graph):
-    individuo = []
+def gerar_individuo_aleatorio(grafo: nx.Graph):
+    individuo = {}
     caminho = []
     fitness = 0
     raiz = int(random.uniform(0, len(grafo.nodes())))
@@ -17,7 +17,7 @@ def gerar_individuo(grafo: nx.Graph):
             print("gerou 1 individuo")
             break
     fitness = avaliacao_fitness(caminho, grafo)
-    individuo.append({'caminho': caminho, 'fitness': fitness})
+    individuo = {'caminho': caminho, 'fitness': fitness}
     return individuo
 
 
@@ -28,22 +28,24 @@ def avaliacao_fitness(caminho: list, grafo: nx.Graph):
     return fitness
 
 
-def gerar_populacao(grafo: nx.Graph, nPopulacao):
-    populacao = []
-    for cidade in range(0, nPopulacao):
-        populacao.append(gerar_individuo(grafo))
-    imprimir_populacao(populacao)
-    return populacao
-
-
-def imprimir_populacao(populacao: list):
-    for individuo in populacao:
-        print(individuo)
-
-
 def buscar_distancia(grafo: nx.Graph, origem: int, destino: int):
     try:
         distancia = nx.dijkstra_path_length(grafo, origem, destino, weight='peso')
         return distancia
     except nx.NetworkXNoPath:
         return float('inf')
+
+
+def cruzamento(self, individuo1, individuo2):
+    filho = {}
+    caminho = []
+    fitness = 0
+    for i in range(len(individuo1["caminho"])):
+        if i < len(individuo1["caminho"]) / 2:
+            caminho.append(individuo1["caminho"][i])
+        else:
+            caminho.append(individuo2["caminho"][i])
+    fitness = avaliacao_fitness(caminho, self.grafo)
+    filho = {'caminho': caminho, 'fitness': fitness}
+    return filho
+# nao pode passar pelo mesmo lugar duas vezes CORRIGIR
