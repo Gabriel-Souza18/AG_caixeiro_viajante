@@ -17,9 +17,9 @@ populacao = Populacao(grafo, 10)
 
 num_geracoes = 10
 for geracao in range(0, num_geracoes):
+    print(f"Geracao {geracao}")
     if geracao == 0:
         populacao.geracao_aleatoria()
     else:
-        print(f"Geracao {geracao}")
         populacao.geracao_cruzamento()
-        populacao.imprimir_geracao()
+    populacao.imprimir_geracao()

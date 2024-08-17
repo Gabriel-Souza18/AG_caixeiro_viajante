@@ -36,16 +36,5 @@ def buscar_distancia(grafo: nx.Graph, origem: int, destino: int):
         return float('inf')
 
 
-def cruzamento(self, individuo1, individuo2):
-    filho = {}
-    caminho = []
-    fitness = 0
-    for i in range(len(individuo1["caminho"])):
-        if i < len(individuo1["caminho"]) / 2:
-            caminho.append(individuo1["caminho"][i])
-        else:
-            caminho.append(individuo2["caminho"][i])
-    fitness = avaliacao_fitness(caminho, self.grafo)
-    filho = {'caminho': caminho, 'fitness': fitness}
-    return filho
-# nao pode passar pelo mesmo lugar duas vezes CORRIGIR
+
+
