@@ -13,7 +13,7 @@ def mostrar_grafo(grafo: nx.Graph):
 
 #    plt.show()  # Exibe o gráfico
 
-class Grafico:
+class Grafico_geral:
     def __init__(self, num_geracoes, num_testes):
         self.fitness_geracoes = {}
         self.y = []
@@ -23,15 +23,41 @@ class Grafico:
         self.num_geracoes = num_geracoes
         self.num_testes = num_testes
 
-    def show_grafico(self):
+    def salvar_grafico_geral(self):
         for teste in range(0, self.num_testes):
             r = np.round(np.random.rand(), 1)
             g = np.round(np.random.rand(), 1)
             b = np.round(np.random.rand(), 1)
-            plt.plot(self.y, self.fitness_geracoes[teste], marker=' ', linestyle='dashed', label="teste " + str(teste))
-            plt.grid(True)
-            plt.xlabel("Geraçoes")
-            plt.ylabel("Fitness")
+            plt.plot(self.y, self.fitness_geracoes[teste], marker='.', linestyle='solid', label="teste " + str(teste))
             plt.legend()
-        plt.savefig("Grafico.png")
+        plt.grid(True)
+        plt.title(str(self.num_testes) + " Testes")
+        plt.xlabel("Geraçoes")
+        plt.ylabel("Fitness")
+        plt.savefig("Grafico_geral.png")
+        plt.close()
+
+
+class grafico_geracao:
+    def __init__(self, fitness):
+        self.maximo = []
+        self.minimo = []
+        self.medio = []
+        for i in range(len(fitness)):
+            self.maximo.append(fitness[i]["maximo"])
+            self.minimo.append(fitness[i]["minimo"])
+            self.medio.append(fitness[i]["medio"])
+        self.y = list(range(len(fitness)))
+
+    def salvar_grafico_geracao(self):
+        plt.plot(self.y, self.maximo, marker='.', linestyle='solid', label="Maximo")
+        plt.plot(self.y, self.minimo, marker='.', linestyle='solid', label="Minimo")
+        plt.plot(self.y, self.medio, marker='.', linestyle='solid', label="Medio")
+
+        plt.title("Maximos, minimos e médias")
+        plt.grid(True)
+        plt.xlabel("Geraçoes")
+        plt.ylabel("Fitness")
+        plt.legend()
+        plt.savefig("Grafico_geracao.png")
         plt.close()

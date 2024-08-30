@@ -4,13 +4,13 @@ from .geradores import *
 
 
 class Populacao:
-    def __init__(self, grafo: nx.Graph, npopulacao):
+    def __init__(self, grafo: nx.Graph, npopulacao, mutacao):
         self.geracoes = []
         self.grafo = grafo
         self.geracao = []
         self.npopulacao = npopulacao
         self.pesos_cruzamento = []
-        self.chance_mutacao = 5
+        self.chance_mutacao = mutacao
 
     def geracao_aleatoria(self):
         self.geracao =[]
@@ -41,8 +41,8 @@ class Populacao:
         melhores = self.selecionar_melhores()
         self.geracao = []
         self.geracao.append(melhores[0])
+        self.pesos_cruzamento = pesos_cruzamento(self.npopulacao)
         for i in range(1, self.npopulacao):
-            self.pesos_cruzamento = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
             individuo1 = random.choices(melhores, weights=self.pesos_cruzamento, k=1)
             individuo2 = random.choices(melhores, weights=self.pesos_cruzamento, k=1)
             filho = self.cruzamento(individuo1[0], individuo2[0])
@@ -55,19 +55,23 @@ class Populacao:
 
     def cruzamento(self, individuo1, individuo2):
         filho = {}
-        caminho = []
+        caminho = [None] * len(self.grafo.nodes())
         fitness = 0
-        for i in range(len(self.grafo.nodes())):
-            if i < len(individuo1["caminho"]) / 2:
-                caminho.append(individuo1["caminho"][i])
-            else:
-                if individuo2["caminho"][i] not in caminho:
-                    caminho.append(individuo2["caminho"][i])
 
-        if len(caminho) < len(self.grafo.nodes()):
-            for i in range(len(self.grafo.nodes())):
-                if individuo2["caminho"][i] not in caminho:
-                    caminho.append(individuo2["caminho"][i])
+        # Selecionar ponto de corte
+        ponto_corte1 = random.randint(0, len(self.grafo.nodes()) - 1)
+        ponto_corte2 = random.randint(ponto_corte1, len(self.grafo.nodes()) - 1)
+
+        # Copiar segmento do primeiro pai
+        caminho[ponto_corte1:ponto_corte2 + 1] = individuo1["caminho"][ponto_corte1:ponto_corte2 + 1]
+
+        # Preencher restante do caminho com genes do segundo pai
+        posicao_atual = (ponto_corte2 + 1) % len(self.grafo.nodes())
+        for gene in individuo2["caminho"]:
+            if gene not in caminho:
+                caminho[posicao_atual] = gene
+                posicao_atual = (posicao_atual + 1) % len(self.grafo.nodes())
+
         fitness = avaliacao_fitness(caminho, self.grafo)
         filho = {'caminho': caminho, 'fitness': fitness}
         return filho
@@ -81,7 +85,7 @@ class Populacao:
                     break
 
             auxiliar = caminho[i]
-            caminho[i] =caminho[k]
+            caminho[i] = caminho[k]
             caminho[k] = auxiliar
 
         return caminho

@@ -35,12 +35,30 @@ def buscar_distancia(grafo: nx.Graph, origem: int, destino: int):
     except nx.NetworkXNoPath:
         return float('inf')
 
+
+def pesos_cruzamento(num_individuos):
+    pesos = []
+    for i in range(num_individuos, 0, -1):
+        pesos.append(i)
+    print(pesos)
+    return pesos
+
+
 def fitness_medio(geracao: list):
     soma = 0
     for individuo in geracao:
         soma += individuo["fitness"]
-    
-    return soma/len(geracao)
+
+    return soma / len(geracao)
 
 
+def estatisticas_fitness_ind(geracao):
+    fitness = [individuo["fitness"] for individuo in geracao]
 
+    resultado = {
+        "minimo": min(fitness),
+        "maximo": max(fitness),
+        "medio": sum(fitness) / len(fitness)
+    }
+
+    return resultado
