@@ -1,5 +1,5 @@
 import random
-
+import numpy as np
 from .geradores import *
 
 
@@ -9,10 +9,11 @@ class Populacao:
         self.grafo = grafo
         self.geracao = []
         self.npopulacao = npopulacao
-        self.pesos_cruzamento = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-        self.chance_mutacao = 30
+        self.pesos_cruzamento = []
+        self.chance_mutacao = 5
 
     def geracao_aleatoria(self):
+        self.geracao =[]
         for cidade in range(0, self.npopulacao):
             self.geracao.append(gerar_individuo_aleatorio(self.grafo))
         self.geracoes.append(self.geracao)
@@ -36,10 +37,12 @@ class Populacao:
         return individuo
 
     def geracao_cruzamento(self):
+        melhores = []
         melhores = self.selecionar_melhores()
         self.geracao = []
-
-        for i in range(0, self.npopulacao):
+        self.geracao.append(melhores[0])
+        for i in range(1, self.npopulacao):
+            self.pesos_cruzamento = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
             individuo1 = random.choices(melhores, weights=self.pesos_cruzamento, k=1)
             individuo2 = random.choices(melhores, weights=self.pesos_cruzamento, k=1)
             filho = self.cruzamento(individuo1[0], individuo2[0])
@@ -86,3 +89,8 @@ class Populacao:
     def imprimir_geracao(self):
         for individuo in self.geracao:
             print(individuo)
+
+        print(f"Fitness medio da geracao: {fitness_medio(self.geracao)}")
+
+    def get_geracao(self):
+        return self.geracao

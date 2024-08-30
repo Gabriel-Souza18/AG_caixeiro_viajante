@@ -35,6 +35,12 @@ def buscar_distancia(grafo: nx.Graph, origem: int, destino: int):
     except nx.NetworkXNoPath:
         return float('inf')
 
+def fitness_medio(geracao: list):
+    soma = 0
+    for individuo in geracao:
+        soma += individuo["fitness"]
+    
+    return soma/len(geracao)
 
 
 

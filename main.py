@@ -3,23 +3,36 @@ from Visao import *
 from algoritmo_genetico import *
 
 
-criador_matriz = Criador_matriz(Gravador("matriz.pkl"))
-# criador_matriz.criar_modificar_matriz()
-# criador_matriz.print_matriz()
+def main():
+    num_testes = 10
+    num_geracoes = 15
+    num_individuos = 10
 
-criador_grafo = Criador_grafo(Leitor("matriz.pkl"))
-criador_grafo.criar_grafo()
-grafo = criador_grafo.get_grafo()
+    arquivo = "sgb.txt"  # lau.txt ou sgb.txt
 
-mostrar_grafo(grafo)
+    criador_grafo = Criador_grafo(Leitor(arquivo))
+    criador_grafo.criar_grafo()
+    grafo = criador_grafo.get_grafo()
+    mostrar_grafo(grafo)
 
-populacao = Populacao(grafo, 10)
+    grafico = Grafico(num_geracoes, num_testes)
 
-num_geracoes = 10
-for geracao in range(0, num_geracoes):
-    print(f"Geracao {geracao}")
-    if geracao == 0:
-        populacao.geracao_aleatoria()
-    else:
-        populacao.geracao_cruzamento()
-    populacao.imprimir_geracao()
+    populacao = Populacao(grafo, 10)
+
+    for teste in range(0, num_testes):
+        fitness_teste = []
+        for geracao in range(0, num_geracoes):
+            print(f"Geracao {geracao}")
+            if geracao == 0:
+                populacao.geracao_aleatoria()
+            else:
+                populacao.geracao_cruzamento()
+            populacao.imprimir_geracao()
+            fitness_teste.append(fitness_medio(populacao.get_geracao()))
+        grafico.fitness_geracoes[teste] = fitness_teste
+
+    grafico.show_grafico()
+
+
+if __name__ == "__main__":
+    main()

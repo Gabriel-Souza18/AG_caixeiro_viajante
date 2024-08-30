@@ -3,7 +3,6 @@ Programa em python
 ## Bibliotecas
 * Networkx - https://networkx.org/documentation/stable/# <Br>
 * Matplotlib - https://matplotlib.org <Br>
-* Pickle - https://docs.python.org/3/library/pickle.html <Br>
 
 ## Exemplo de codigo
 

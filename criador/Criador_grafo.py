@@ -10,11 +10,13 @@ class Criador_grafo:
 
     def criar_grafo(self):
         matriz = self.leitor.ler_matriz()
-
+        print(len(matriz))
         for linha in range(0, len(matriz)):
             for coluna in range(0, len(matriz[linha])):
                 if linha < coluna and matriz[linha][coluna] is not None:
                     self.grafo.add_edge(linha, coluna, peso=matriz[linha][coluna])
+
+        self.print_grafo()
         return 0
 
     def print_grafo(self):
@@ -29,4 +31,3 @@ class Criador_grafo:
 
     def get_grafo(self):
         return self.grafo
-    
