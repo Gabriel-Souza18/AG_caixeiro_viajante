@@ -27,8 +27,8 @@ Parte Principal da funcao main() em main.py
 ## Resultados
 Graficos Formados com a biblioteca matplotlib:<br>
 
-<img src="Geral.png" width="300"/><br>
-<img src="Grafico_geracao.png" width="300"/><br>
+<img src="Geral.png" width="300"/>
+<img src="Grafico_geracao.png" width="300"/>
 <img src="Minimo.png" width="300"/>
 
 
