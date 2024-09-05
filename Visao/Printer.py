@@ -23,7 +23,7 @@ class Grafico_geral:
         self.num_geracoes = num_geracoes
         self.num_testes = num_testes
 
-    def salvar_grafico_geral(self):
+    def salvar_grafico_geral(self, caminho):
         for teste in range(0, self.num_testes):
             r = np.round(np.random.rand(), 1)
             g = np.round(np.random.rand(), 1)
@@ -31,10 +31,10 @@ class Grafico_geral:
             plt.plot(self.y, self.fitness_geracoes[teste], marker='.', linestyle='solid', label="teste " + str(teste))
             plt.legend()
         plt.grid(True)
-        plt.title(str(self.num_testes) + " Testes")
+        plt.title(caminho)
         plt.xlabel("Geraçoes")
         plt.ylabel("Fitness")
-        plt.savefig("Grafico_geral.png")
+        plt.savefig(str(caminho)+".png")
         plt.close()
 
 

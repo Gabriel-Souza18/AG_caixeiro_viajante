@@ -94,7 +94,6 @@ class Populacao:
         for individuo in self.geracao:
             print(individuo)
 
-        print(f"Fitness medio da geracao: {fitness_medio(self.geracao)}")
 
     def get_geracao(self):
         return self.geracao

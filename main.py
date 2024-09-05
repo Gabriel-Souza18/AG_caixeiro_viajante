@@ -16,13 +16,16 @@ def main():
     grafo = criador_grafo.get_grafo()
     mostrar_grafo(grafo)
 
-    grafico = Grafico_geral(num_geracoes, num_testes)
+    grafico_media = Grafico_geral(num_geracoes, num_testes)
+    grafico_minimo = Grafico_geral(num_geracoes,num_testes)
 
     populacao = Populacao(grafo, num_individuos, chance_mutacao)
 
     for teste in range(0, num_testes):
         fitness_teste = []
+        media_geracao = []
         estatisticas_fitness = []
+        print(f"Teste {teste}")
         for geracao in range(0, num_geracoes):
             print(f"Geracao {geracao}")
             if geracao == 0:
@@ -32,15 +35,17 @@ def main():
 
             populacao.imprimir_geracao()
             fitness_teste.append(fitness_medio(populacao.get_geracao()))
+            media_geracao.append(populacao.get_geracao()[0]["fitness"])
             if teste == num_testes - 1:
                 estatisticas_fitness.append(estatisticas_fitness_ind(populacao.get_geracao()))
 
-        grafico.fitness_geracoes[teste] = fitness_teste
-
+        grafico_media.fitness_geracoes[teste] = fitness_teste
+        grafico_minimo.fitness_geracoes[teste] = media_geracao
         if teste == num_testes - 1:
             grafico_geracao_obj = grafico_geracao(estatisticas_fitness)
             grafico_geracao_obj.salvar_grafico_geracao()
-    grafico.salvar_grafico_geral()
+    grafico_media.salvar_grafico_geral("Geral")
+    grafico_minimo.salvar_grafico_geral("Minimo")
 
 
 if __name__ == "__main__":
